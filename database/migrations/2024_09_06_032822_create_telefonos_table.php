@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('numero');
             $table->string('tipo');
-            $table->integer('contacto_id')->unsigned();
-            $table->foreign('contacto_id')->references('id')->on('contacto_id');
+            $table->unsignedBigInteger('contacto_id')->unsigned();
+            $table->foreign('contacto_id')->references('id')->on('contactos');
             $table->timestamps();
             $table->softDeletes();
         });
