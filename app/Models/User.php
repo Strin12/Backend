@@ -44,4 +44,8 @@ class User extends Authenticatable
     //         'contrasenia' => 'hashed',
     //     ];
     // }
+    public function contactos()
+    {
+        return $this->hasOne(Contactos::class);
+    }
 }
