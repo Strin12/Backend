@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('telefonos', function (Blueprint $table) {
             $table->id();
+            $table->string('numero');
+            $table->string('tipo');
+            $table->integer('contacto_id')->unsigned();
+            $table->foreign('contacto_id')->references('id')->on('contacto_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

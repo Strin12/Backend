@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('contactos', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->date('fecha_nacimiento');
+            $table->integer('usuario_id')->unsigned();
+            $table->foreign('usuario_id')->references('id')->on('usuario_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
