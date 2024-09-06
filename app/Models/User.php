@@ -30,6 +30,9 @@ class User extends Authenticatable
     protected $hidden = [
         'contrasenia',
         'remember_token',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

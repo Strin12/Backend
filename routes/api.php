@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\UsuariosController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 Route::post('usuarios', [UsuariosController::class, 'create']);
 Route::put('usuarios/{id}', [UsuariosController::class, 'updated']);
 Route::delete('usuarios/{id}', [UsuariosController::class, 'delete']);
