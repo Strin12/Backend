@@ -17,9 +17,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'nombre',
+        'correo',
+        'contrasenia',
     ];
 
     /**
@@ -28,8 +28,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        'contrasenia',
         'remember_token',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
@@ -37,11 +40,15 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    // protected function casts(): array
+    // {
+    //     return [
+    //         'email_verified_at' => 'datetime',
+    //         'contrasenia' => 'hashed',
+    //     ];
+    // }
+    public function contactos()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasOne(Contactos::class, 'id', 'usuario_id');
     }
 }

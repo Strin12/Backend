@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('direcciones', function (Blueprint $table) {
             $table->id();
+            $table->string('direccion');
+            $table->string('ciudad');
+            $table->string('estado');
+            $table->string('codigo_postal');
+            $table->string('pais');
+            $table->unsignedBigInteger('contacto_id')->unsigned();
+            $table->foreign('contacto_id')->references('id')->on('contactos');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
