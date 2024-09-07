@@ -28,7 +28,7 @@ class ContactosController extends Controller
             'apellido.required' => 'El campo apellido es obligatorio.',
             'apellido.string' => 'El campo apellido debe ser una cadena de texto.',
             'apellido.max' => 'El apellido no debe tener más de 35 caracteres.',
-            'fecha_nacimiento.required' => 'El campo nombre es obligatorio.',
+            'fecha_nacimiento.required' => 'El campo fecha_nacimiento es obligatorio.',
         ]);
 
         if ($validador->fails()) {
@@ -40,9 +40,9 @@ class ContactosController extends Controller
         }
         try {
             DB::beginTransaction();
-            $usuario = $this->contactos_repository->create($request->get('nombre'), $request->get('apellido'), $request->get('fecha_nacimiento'),$$request->get('usuario_id'));
+            $contactos = $this->contactos_repository->create($request->get('nombre'), $request->get('apellido'), $request->get('fecha_nacimiento'), $request->get('usuario_id'));
             DB::commit();
-            return response()->json(compact('usuario'));
+            return response()->json(compact('contactos'));
         } catch (\Exception $ex) {
             DB::rollBack();
             return response()->json(['error' => $ex->getMessage()], 500);
@@ -62,7 +62,7 @@ class ContactosController extends Controller
             'apellido.required' => 'El campo apellido es obligatorio.',
             'apellido.string' => 'El campo apellido debe ser una cadena de texto.',
             'apellido.max' => 'El apellido no debe tener más de 35 caracteres.',
-            'fecha_nacimiento.required' => 'El campo nombre es obligatorio.',
+            'fecha_nacimiento.required' => 'El campo fecha_nacimiento es obligatorio.',
         ]);
 
         if ($validador->fails()) {
@@ -75,9 +75,9 @@ class ContactosController extends Controller
         try {
 
             DB::beginTransaction();
-            $usuario = $this->contactos_repository->update($id, $request->get('nombre'), $request->get('apellido'), $request->get('fecha_nacimiento'),$$request->get('usuario_id'));
+            $contactos = $this->contactos_repository->update($id,$request->get('nombre'), $request->get('apellido'), $request->get('fecha_nacimiento'), $request->get('usuario_id'));
             DB::commit();
-            return response()->json(compact('usuario'));
+            return response()->json(compact('contactos'));
         } catch (\Exception $ex) {
             DB::rollBack();
             return response()->json(['error' => $ex->getMessage()], 500);
