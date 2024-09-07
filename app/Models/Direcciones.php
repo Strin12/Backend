@@ -26,6 +26,6 @@ class Direcciones extends Model
 
     public function contactos()
     {
-        return $this->belongsTo(Contactos::class, 'id', 'contacto_id');
+        return $this->belongsTo(Contactos::class, 'contacto_id', 'id');
     }
 }

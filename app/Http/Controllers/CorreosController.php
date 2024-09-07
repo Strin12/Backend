@@ -25,7 +25,7 @@ class CorreosController extends Controller
             'correo.string' => 'El correo debe ser una cadena de texto.',
             'correo.unique' => 'El correo ya está registrado.',
             'correo.max' => 'El correo no debe tener más de 50 caracteres.',
-            'tipo.required' => 'El campo apellido es obligatorio.'
+            'tipo.required' => 'El campo tipo es obligatorio.'
          ]);
 
         if ($validador->fails()) {
@@ -37,9 +37,9 @@ class CorreosController extends Controller
         }
         try {
             DB::beginTransaction();
-            $contactos = $this->correo_repository->create($request->get('correo'), $request->get('tipo'),$request->get('contacto_id'));
+            $correos = $this->correo_repository->create($request->get('correo'), $request->get('tipo'),$request->get('contacto_id'));
             DB::commit();
-            return response()->json(compact('contactos'));
+            return response()->json(compact('correos'));
         } catch (\Exception $ex) {
             DB::rollBack();
             return response()->json(['error' => $ex->getMessage()], 500);
@@ -56,7 +56,7 @@ class CorreosController extends Controller
             'correo.string' => 'El correo debe ser una cadena de texto.',
             'correo.unique' => 'El correo ya está registrado.',
             'correo.max' => 'El correo no debe tener más de 50 caracteres.',
-            'tipo.required' => 'El campo apellido es obligatorio.'
+            'tipo.required' => 'El campo tipo es obligatorio.'
          ]);
 
         if ($validador->fails()) {
@@ -69,9 +69,9 @@ class CorreosController extends Controller
         try {
 
             DB::beginTransaction();
-            $contactos = $this->correo_repository->update($id,$request->get('correo'), $request->get('tipo'),$request->get('contacto_id'));
+            $correos = $this->correo_repository->update($id,$request->get('correo'), $request->get('tipo'),$request->get('contacto_id'));
             DB::commit();
-            return response()->json(compact('contactos'));
+            return response()->json(compact('correos'));
         } catch (\Exception $ex) {
             DB::rollBack();
             return response()->json(['error' => $ex->getMessage()], 500);

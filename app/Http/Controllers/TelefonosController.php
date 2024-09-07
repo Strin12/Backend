@@ -22,10 +22,10 @@ class TelefonosController extends Controller
             'numero' => 'required|string|max:10',
             'tipo' => 'required|',
         ], [
-            'numero.required' => 'El campo nombre es obligatorio.',
-            'numero.string' => 'El campo nombre debe ser una cadena de texto.',
-            'numero.max' => 'El nombre no debe tener más de 10 caracteres.',
-            'tipo.required' => 'El campo apellido es obligatorio.'
+            'numero.required' => 'El campo numero es obligatorio.',
+            'numero.string' => 'El campo numero debe ser una cadena de texto.',
+            'numero.max' => 'El numero no debe tener más de 10 caracteres.',
+            'tipo.required' => 'El campo tipo es obligatorio.'
          ]);
 
         if ($validador->fails()) {
@@ -37,9 +37,9 @@ class TelefonosController extends Controller
         }
         try {
             DB::beginTransaction();
-            $contactos = $this->telefonos_repository->create($request->get('numero'), $request->get('tipo'),$request->get('contacto_id'));
+            $telefonos = $this->telefonos_repository->create($request->get('numero'), $request->get('tipo'),$request->get('contacto_id'));
             DB::commit();
-            return response()->json(compact('contactos'));
+            return response()->json(compact('telefonos'));
         } catch (\Exception $ex) {
             DB::rollBack();
             return response()->json(['error' => $ex->getMessage()], 500);
@@ -55,7 +55,7 @@ class TelefonosController extends Controller
             'numero.required' => 'El campo nombre es obligatorio.',
             'numero.string' => 'El campo nombre debe ser una cadena de texto.',
             'numero.max' => 'El nombre no debe tener más de 10 caracteres.',
-            'tipo.required' => 'El campo apellido es obligatorio.'
+            'tipo.required' => 'El campo tipo es obligatorio.'
          ]);
 
         if ($validador->fails()) {
@@ -68,9 +68,9 @@ class TelefonosController extends Controller
         try {
 
             DB::beginTransaction();
-            $contactos = $this->telefonos_repository->update($id,$request->get('numero'), $request->get('tipo'),$request->get('contacto_id'));
+            $telefonos = $this->telefonos_repository->update($id,$request->get('numero'), $request->get('tipo'),$request->get('contacto_id'));
             DB::commit();
-            return response()->json(compact('contactos'));
+            return response()->json(compact('telefonos'));
         } catch (\Exception $ex) {
             DB::rollBack();
             return response()->json(['error' => $ex->getMessage()], 500);

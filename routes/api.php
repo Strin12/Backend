@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ContactosController;
+use App\Http\Controllers\CorreosController;
+use App\Http\Controllers\DireccionesController;
 use App\Http\Controllers\TelefonosController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Http\Request;
@@ -26,3 +28,16 @@ Route::put('telefonos/{id}', [TelefonosController::class, 'updated']);
 Route::delete('telefonos/{id}', [TelefonosController::class, 'delete']);
 Route::get('telefonos/{id}', [TelefonosController::class, 'edit']);
 Route::get('telefonos', [TelefonosController::class, 'list']);
+
+Route::post('correos', [CorreosController::class, 'create']);
+Route::put('correos/{id}', [CorreosController::class, 'updated']);
+Route::delete('correos/{id}', [CorreosController::class, 'delete']);
+Route::get('correos/{id}', [CorreosController::class, 'edit']);
+Route::get('correos', [CorreosController::class, 'list']);
+
+Route::post('direcciones', [DireccionesController::class, 'create']);
+Route::put('direcciones/{id}', [DireccionesController::class, 'updated']);
+Route::delete('direcciones/{id}', [DireccionesController::class, 'delete']);
+Route::get('direcciones/{id}', [DireccionesController::class, 'edit']);
+Route::get('direcciones', [DireccionesController::class, 'list']);
+Route::get('direcciones/pais/{pais}', [DireccionesController::class, 'getPais']);
