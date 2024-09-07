@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Telefonos extends Model
 {
     use HasFactory;
-    protected $table ='direcciones';
+    protected $table ='telefonos';
 
     protected $fillable = [
         'numero',
@@ -23,6 +23,6 @@ class Telefonos extends Model
 
     public function contactos()
     {
-        return $this->belongsTo(contactos::class);
+        return $this->belongsTo(Contactos::class, 'id', 'contacto_id');
     }
 }

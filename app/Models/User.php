@@ -30,6 +30,9 @@ class User extends Authenticatable
     protected $hidden = [
         'contrasenia',
         'remember_token',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
@@ -46,6 +49,6 @@ class User extends Authenticatable
     // }
     public function contactos()
     {
-        return $this->hasOne(Contactos::class);
+        return $this->hasOne(Contactos::class, 'id', 'usuario_id');
     }
 }

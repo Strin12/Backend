@@ -23,6 +23,6 @@ class Correos extends Model
 
     public function contactos()
     {
-        return $this->belongsTo(Contactos::class);
+        return $this->belongsTo(Contactos::class, 'id', 'contacto_id');
     }
 }

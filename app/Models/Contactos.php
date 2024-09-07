@@ -24,18 +24,18 @@ class Contactos extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class ,'usuario_id', 'id');
     }
     public function telefonos()
     {
-        return $this->hasOne(Telefonos::class);
+        return $this->hasOne(Telefonos::class, 'contacto_id','id');
     }
     public function correos()
     {
-        return $this->hasOne(Correos::class);
+        return $this->hasOne(Correos::class , 'contacto_id','id');
     }
     public function Direcciones()
     {
-        return $this->hasOne(Direcciones::class);
+        return $this->hasOne(Direcciones::class, 'contacto_id','id');
     }
 }

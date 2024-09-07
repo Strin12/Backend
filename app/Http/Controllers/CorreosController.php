@@ -2,39 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\UsuarioRepository;
+use App\Repositories\CorreosRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
-
-class UsuariosController extends Controller
+class CorreosController extends Controller
 {
+    protected $correo_repository;
 
-    protected $usuarios_repository;
-
-    public function __construct(UsuarioRepository $repository)
+    public function __construct(CorreosRepository $repository)
     {
-        $this->usuarios_repository = $repository;
+        $this->correo_repository = $repository;
     }
 
     public function create(Request $request)
     {
         $validador = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:35',
-            'correo' => 'required|string|unique:users|max:50',
-            'contrasenia' => 'required|min:6',
+            'correo' => 'required|string|unique:correos|max:50',
+            'tipo' => 'required',
         ], [
-            'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.string' => 'El campo nombre debe ser una cadena de texto.',
-            'nombre.max' => 'El nombre no debe tener más de 35 caracteres.',
             'correo.required' => 'El campo correo es obligatorio.',
             'correo.string' => 'El correo debe ser una cadena de texto.',
             'correo.unique' => 'El correo ya está registrado.',
             'correo.max' => 'El correo no debe tener más de 50 caracteres.',
-            'contrasenia.required' => 'La contraseña es obligatoria.',
-            'contrasenia.min' => 'La contraseña debe tener al menos 6 caracteres.',
-        ]);
+            'tipo.required' => 'El campo tipo es obligatorio.'
+         ]);
 
         if ($validador->fails()) {
             return response()->json([
@@ -45,9 +37,9 @@ class UsuariosController extends Controller
         }
         try {
             DB::beginTransaction();
-            $usuario = $this->usuarios_repository->create($request->get('nombre'), $request->get('correo'), $request->get('contrasenia'));
+            $correos = $this->correo_repository->create($request->get('correo'), $request->get('tipo'),$request->get('contacto_id'));
             DB::commit();
-            return response()->json(compact('usuario'));
+            return response()->json(compact('correos'));
         } catch (\Exception $ex) {
             DB::rollBack();
             return response()->json(['error' => $ex->getMessage()], 500);
@@ -57,34 +49,29 @@ class UsuariosController extends Controller
     public function updated(Request $request, $id)
     {
         $validador = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:35',
-            'correo' => 'required|string|unique:users|max:50',
-            'contrasenia' => 'required|min:6',
+            'correo' => 'required|string|unique:correos|max:50',
+            'tipo' => 'required',
         ], [
-            'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.string' => 'El campo nombre debe ser una cadena de texto.',
-            'nombre.max' => 'El nombre no debe tener más de 35 caracteres.',
             'correo.required' => 'El campo correo es obligatorio.',
             'correo.string' => 'El correo debe ser una cadena de texto.',
             'correo.unique' => 'El correo ya está registrado.',
             'correo.max' => 'El correo no debe tener más de 50 caracteres.',
-            'contrasenia.required' => 'La contraseña es obligatoria.',
-            'contrasenia.min' => 'La contraseña debe tener al menos 6 caracteres.',
-        ]);
+            'tipo.required' => 'El campo tipo es obligatorio.'
+         ]);
 
         if ($validador->fails()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Errores de validación',
                 'errors' => $validador->errors(),
-            ], 422);
+            ], 400);
         }
         try {
 
             DB::beginTransaction();
-            $usuario = $this->usuarios_repository->update($id, $request->get('nombre'), $request->get('correo'), $request->get('contrasenia'));
+            $correos = $this->correo_repository->update($id,$request->get('correo'), $request->get('tipo'),$request->get('contacto_id'));
             DB::commit();
-            return response()->json(compact('usuario'));
+            return response()->json(compact('correos'));
         } catch (\Exception $ex) {
             DB::rollBack();
             return response()->json(['error' => $ex->getMessage()], 500);
@@ -95,7 +82,7 @@ class UsuariosController extends Controller
     {
 
         try {
-            return response()->json($this->usuarios_repository->delete($id));
+            return response()->json($this->correo_repository->delete($id));
         } catch (\Exception $ex) {
             return response()->json(['error' => $ex->getMessage()], 500);
         }
@@ -104,7 +91,7 @@ class UsuariosController extends Controller
     {
 
         try {
-            return response()->json($this->usuarios_repository->find($id));
+            return response()->json($this->correo_repository->find($id));
         } catch (\Exception $ex) {
             return response()->json(['error' => $ex->getMessage()], 500);
         }
@@ -112,9 +99,10 @@ class UsuariosController extends Controller
     public function list()
     {
         try {
-            return response()->json($this->usuarios_repository->list());
+            return response()->json($this->correo_repository->list());
         } catch (\Exception $ex) {
             return response()->json(['error' => $ex->getMessage()], 500);
         }
     }
 }
+
