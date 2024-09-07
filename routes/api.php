@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactosController;
+use App\Http\Controllers\TelefonosController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,3 +20,9 @@ Route::put('contactos/{id}', [ContactosController::class, 'updated']);
 Route::delete('contactos/{id}', [ContactosController::class, 'delete']);
 Route::get('contactos/{id}', [ContactosController::class, 'edit']);
 Route::get('contactos', [ContactosController::class, 'list']);
+
+Route::post('telefonos', [TelefonosController::class, 'create']);
+Route::put('telefonos/{id}', [TelefonosController::class, 'updated']);
+Route::delete('telefonos/{id}', [TelefonosController::class, 'delete']);
+Route::get('telefonos/{id}', [TelefonosController::class, 'edit']);
+Route::get('telefonos', [TelefonosController::class, 'list']);
